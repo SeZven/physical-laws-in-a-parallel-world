@@ -11,7 +11,7 @@ public class BallUpCollision : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb.AddForce(new Vector2(0, 3), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(7, 10), ForceMode2D.Impulse);
     }
 
     // Update is called once per frame
@@ -26,8 +26,8 @@ public class BallUpCollision : MonoBehaviour
         {
             Debug.Log("Box collision");
             var speed = lastVelocity.magnitude;
-            var direction = new Vector2(0, 3);
-            rb.velocity = direction * Mathf.Max(speed, 0f);
+            var direction = new Vector2(lastVelocity[0], 1);
+            rb.velocity = direction * Mathf.Min(speed, 10f);
 
         }
     }
