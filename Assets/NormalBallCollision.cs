@@ -14,7 +14,7 @@ public class NormalBallCollision : MonoBehaviour
     void Start()
     {
         rb.AddForce(new Vector2(2, 4), ForceMode2D.Impulse);
-        rb.angularVelocity = 13021;
+        rb.angularVelocity = 1800;
     }
 
     // Update is called once per frame
@@ -42,7 +42,8 @@ public class NormalBallCollision : MonoBehaviour
             var winkelgeschwindikeit = 2 * Mathf.PI / umlaufzeit; // Winkelgeschwindigkeit = 2*pi / Umlaufszeit
             rb.angularVelocity = traegheitsmoment * winkelgeschwindikeit;
 
-            // Geschwindigkeit und Drehimpuls aufeinander abstimmen
+            // Geschwindigkeit und Drehimpuls aufeinander abstimmen (Energie muss gleich bleiben)
+            // ?
 
         }
     }
