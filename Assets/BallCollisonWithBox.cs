@@ -18,11 +18,9 @@ public class BallCollisonWithBox : MonoBehaviour
     {
         if (collision.collider.tag == "Box")
         {
-            Debug.Log("Box collision");
             var speed = lastVelocity.magnitude;
             var direction = Vector2.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
             rb.velocity = direction * Mathf.Min(speed, 10f);
-
         }
     }
 }
