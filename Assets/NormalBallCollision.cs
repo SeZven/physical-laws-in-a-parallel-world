@@ -8,7 +8,6 @@ public class NormalBallCollision : MonoBehaviour
     public CircleCollider2D cc;
 
     Vector2 lastVelocity;
-    float lastAngularVelocity;
 
     // Start is called before the first frame update
     void Start()
@@ -21,30 +20,29 @@ public class NormalBallCollision : MonoBehaviour
     void Update()
     {
         lastVelocity = rb.velocity;
-        lastAngularVelocity = rb.angularVelocity;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Box" || collision.collider.tag == "Ball")
+        if (collision.collider.tag == "Box")
         {
             // Reflexionsgesetz
             var speed = lastVelocity.magnitude;
             var direction = Vector2.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
             rb.velocity = direction * speed;
             // Impulserhaltung gilt auch, da Bewegungsenergie (kinetische Energie) im Ball unver‰ndert und sich die Wand nicht bewegt
-
-            // Erhaltung des Drehimpuls
-            var drehzahl = lastAngularVelocity / 360; // ? Drehzahl = Drehgeschwindikeit / 360, da eine Umdrehung = 360
-            // winkelgewschindikeit = 2*pi * n => n = 2*pi / winkelgeschwindigkeit
-            var umlaufzeit = 1 / drehzahl; // Umlaufzeit = 1 / Drehzahl
-            var traegheitsmoment = rb.mass * cc.radius * cc.radius; // Tr‰gheitsmoment = Masse * Radius^2
-            var winkelgeschwindikeit = 2 * Mathf.PI / umlaufzeit; // Winkelgeschwindigkeit = 2*pi / Umlaufszeit
-            rb.angularVelocity = traegheitsmoment * winkelgeschwindikeit;
-
-            // Geschwindigkeit und Drehimpuls aufeinander abstimmen (Energie muss gleich bleiben)
-            // ?
-
         }
+
+        else if (collision.collider.tag == "Ball")
+        {
+            Debug.Log(collision.collider.attachedRigidbody.mass); // Masse des kollidierenden Objekts
+            Debug.Log(rb.mass); // Eigene Masse
+
+            // Impulserhaltung (elastische Stoﬂ)
+            var speed = lastVelocity.magnitude;
+            var direction = Vector2.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
+            rb.velocity = direction * speed;
+        }
+
     }
 }
