@@ -7,7 +7,7 @@ public class NormalBallCollision : MonoBehaviour
     public Rigidbody2D rb;
     public CircleCollider2D cc;
 
-    Vector2 lastVelocity;
+    public Vector2 lastVelocity;
 
     // Start is called before the first frame update
     void Start()
@@ -37,11 +37,15 @@ public class NormalBallCollision : MonoBehaviour
         {
             Debug.Log(collision.collider.attachedRigidbody.mass); // Masse des kollidierenden Objekts
             Debug.Log(rb.mass); // Eigene Masse
+            Debug.Log(collision.collider.attachedRigidbody.velocity); // TODO Wahrscheinlich wird lastVelocity gebraucht !!!
+
+            var massCollidingBall = collision.collider.attachedRigidbody.mass;
+            var velocityCollidingBall = collision.collider.attachedRigidbody.velocity;
+
+            
 
             // Impulserhaltung (elastische Stoﬂ)
-            var speed = lastVelocity.magnitude;
-            var direction = Vector2.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
-            rb.velocity = direction * speed;
+            rb.velocity = (2 * massCollidingBall * velocityCollidingBall + (rb.mass - massCollidingBall) * lastVelocity) / (rb.mass + massCollidingBall);
         }
 
     }
