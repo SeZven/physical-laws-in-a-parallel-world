@@ -12,7 +12,7 @@ public class NormalBallCollision : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb.AddForce(new Vector2(2, 0), ForceMode2D.Impulse);
+        rb.AddForce(new Vector2(10, 7), ForceMode2D.Impulse);
     }
 
     // Update is called once per frame
@@ -40,7 +40,7 @@ public class NormalBallCollision : MonoBehaviour
             Debug.Log(collision.collider.attachedRigidbody.velocity); // TODO Wahrscheinlich wird lastVelocity gebraucht !!! -> Lösung über relativeVelocity
 
             var massCollidingBall = collision.collider.attachedRigidbody.mass;
-            var velocityCollidingBall = collision.relativeVelocity + lastVelocity;//collision.collider.attachedRigidbody.velocity;
+            var velocityCollidingBall = collision.relativeVelocity + lastVelocity; //collision.collider.attachedRigidbody.velocity;
 
             //collision.collider
 
