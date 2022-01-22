@@ -12,12 +12,11 @@ public class NormalBallCollision : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rb.AddForce(new Vector2(2, 4), ForceMode2D.Impulse);
-        rb.angularVelocity = 1800;
+        rb.AddForce(new Vector2(2, 0), ForceMode2D.Impulse);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         lastVelocity = rb.velocity;
     }
@@ -31,21 +30,29 @@ public class NormalBallCollision : MonoBehaviour
             var direction = Vector2.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
             rb.velocity = direction * speed;
             // Impulserhaltung gilt auch, da Bewegungsenergie (kinetische Energie) im Ball unverändert und sich die Wand nicht bewegt
+            //rb.velocity = -lastVelocity;
         }
 
         else if (collision.collider.tag == "Ball")
         {
             Debug.Log(collision.collider.attachedRigidbody.mass); // Masse des kollidierenden Objekts
             Debug.Log(rb.mass); // Eigene Masse
-            Debug.Log(collision.collider.attachedRigidbody.velocity); // TODO Wahrscheinlich wird lastVelocity gebraucht !!!
+            Debug.Log(collision.collider.attachedRigidbody.velocity); // TODO Wahrscheinlich wird lastVelocity gebraucht !!! -> Lösung über relativeVelocity
 
             var massCollidingBall = collision.collider.attachedRigidbody.mass;
-            var velocityCollidingBall = collision.collider.attachedRigidbody.velocity;
+            var velocityCollidingBall = collision.relativeVelocity + lastVelocity;//collision.collider.attachedRigidbody.velocity;
 
-            
+            //collision.collider
 
             // Impulserhaltung (elastische Stoß)
             rb.velocity = (2 * massCollidingBall * velocityCollidingBall + (rb.mass - massCollidingBall) * lastVelocity) / (rb.mass + massCollidingBall);
+
+            // Sonderfall: Kugeln gleicher Masse und gleicher Geschwindigkeit 
+            //rb.velocity = -1 * lastVelocity; => funktioniert => Problem lastVeloity für colliding object wird benötigt!!!
+
+           
+
+
         }
 
     }

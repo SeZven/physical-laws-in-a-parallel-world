@@ -157,6 +157,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 63536337}
   cc: {fileID: 63536336}
+  lastVelocity: {x: 0, y: 0}
 --- !u!58 &63536336
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1001,6 +1002,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1664123646}
   cc: {fileID: 1664123645}
+  lastVelocity: {x: 0, y: 0}
 --- !u!58 &1664123645
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1037,7 +1039,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &1664123647
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1097,7 +1099,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1664123643}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.6, y: 1.87, z: 0}
+  m_LocalPosition: {x: -2.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1158,6 +1160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 1789896291}
   cc: {fileID: 1789896295}
+  lastVelocity: {x: 0, y: 0}
 --- !u!212 &1789896293
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1382,6 +1385,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 2127164071}
   cc: {fileID: 2127164070}
+  lastVelocity: {x: 0, y: 0}
 --- !u!58 &2127164070
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -1418,7 +1422,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!212 &2127164072
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1478,7 +1482,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2127164068}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.39, y: -0.08, z: 0}
+  m_LocalPosition: {x: 1.5, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
