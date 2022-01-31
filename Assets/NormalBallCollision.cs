@@ -40,14 +40,14 @@ public class NormalBallCollision : MonoBehaviour
             //Debug.Log(collision.collider.attachedRigidbody.velocity); // TODO Wahrscheinlich wird lastVelocity gebraucht !!! -> Lösung über relativeVelocity -> nicht die Lösung :(
 
             var massCollidingBall = collision.collider.attachedRigidbody.mass;
-            var velocityCollidingBall = collision.relativeVelocity + lastVelocity; //collision.collider.attachedRigidbody.velocity;
-
+            var velocityCollidingBall = collision.collider.GetComponent<NormalBallCollision>().lastVelocity;
             //kinetische Energie berechnen (Vor der Kollision)
             // Muss nach der Kollision gleich sein
 
-            var keneticEngeryBall = 0.5 * rb.mass * lastVelocity.magnitude;
-            var keneticEnergyCollidingBall = 0.5 * massCollidingBall * velocityCollidingBall.magnitude;
+            var keneticEngeryBall = 0.5f * rb.mass * lastVelocity.magnitude;
+            var keneticEnergyCollidingBall = 0.5f * massCollidingBall * velocityCollidingBall.magnitude;
             var keneticEnergy = keneticEngeryBall + keneticEnergyCollidingBall;
+            keneticEnergy = Mathf.Round(keneticEnergy * 100f) / 100f;
 
             // Impulserhaltung (elastische Stoß)
             rb.velocity = (2 * massCollidingBall * velocityCollidingBall + (rb.mass - massCollidingBall) * lastVelocity) / (rb.mass + massCollidingBall);
@@ -57,9 +57,10 @@ public class NormalBallCollision : MonoBehaviour
             // Sonderfall: Kugeln gleicher Masse und gleicher Geschwindigkeit 
             //rb.velocity = -1 * lastVelocity; => funktioniert => Problem lastVeloity für colliding object wird benötigt!!!
 
-            var newKeneticEnergyBall = 0.5 * rb.mass * rb.velocity.magnitude;
-            var newKeneticEnergyCollidingBall = 0.5 * massCollidingBall * newVelocityCollidingBall.magnitude;
+            var newKeneticEnergyBall = 0.5f * rb.mass * rb.velocity.magnitude;
+            var newKeneticEnergyCollidingBall = 0.5f * massCollidingBall * newVelocityCollidingBall.magnitude;
             var newKeneticEnergy = newKeneticEnergyBall + newKeneticEnergyCollidingBall;
+            newKeneticEnergy = Mathf.Round(newKeneticEnergy * 100f) / 100f;
 
             Debug.Log("Kenetic Energy before collision: " + keneticEnergy + "   Kenetic Energy after collision: " + newKeneticEnergy);
             Debug.Log("before == after : " + (keneticEnergy == newKeneticEnergy));
