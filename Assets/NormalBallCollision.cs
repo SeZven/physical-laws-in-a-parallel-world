@@ -8,6 +8,7 @@ public class NormalBallCollision : MonoBehaviour
     public CircleCollider2D cc;
 
     public Vector2 lastVelocity;
+    public float lastSpeed;
 
     // Start is called before the first frame update
     void Start()
@@ -19,6 +20,7 @@ public class NormalBallCollision : MonoBehaviour
     void FixedUpdate()
     {
         lastVelocity = rb.velocity;
+        lastSpeed = rb.velocity.magnitude;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -30,6 +32,11 @@ public class NormalBallCollision : MonoBehaviour
             var direction = Vector2.Reflect(lastVelocity.normalized, collision.contacts[0].normal);
             rb.velocity = direction * speed;
             // Impulserhaltung gilt auch, da Bewegungsenergie (kinetische Energie) im Ball unverändert und sich die Wand nicht bewegt
+            
+
+            //var massCollidingBall = 100000000000000;
+            //var velocityCollidingBall = new Vector2(0, 0);
+            //rb.velocity = (2 * massCollidingBall * velocityCollidingBall + (rb.mass - massCollidingBall) * lastVelocity) / (rb.mass + massCollidingBall);
             //rb.velocity = -lastVelocity;
         }
 
@@ -50,14 +57,15 @@ public class NormalBallCollision : MonoBehaviour
             keneticEnergy = Mathf.Round(keneticEnergy * 100f) / 100f;
 
             // Impulserhaltung (elastische Stoß)
-            rb.velocity = (2 * massCollidingBall * velocityCollidingBall + (rb.mass - massCollidingBall) * lastVelocity) / (rb.mass + massCollidingBall);
+            var newVelocity = (2 * massCollidingBall * velocityCollidingBall + (rb.mass - massCollidingBall) * lastVelocity) / (rb.mass + massCollidingBall);
+             
 
             var newVelocityCollidingBall = (2 * rb.mass * lastVelocity + (massCollidingBall - rb.mass) * velocityCollidingBall) / (rb.mass + massCollidingBall);
 
             // Sonderfall: Kugeln gleicher Masse und gleicher Geschwindigkeit 
             //rb.velocity = -1 * lastVelocity; => funktioniert => Problem lastVeloity für colliding object wird benötigt!!!
 
-            var newKeneticEnergyBall = 0.5f * rb.mass * rb.velocity.magnitude;
+            var newKeneticEnergyBall = 0.5f * rb.mass * newVelocity.magnitude;
             var newKeneticEnergyCollidingBall = 0.5f * massCollidingBall * newVelocityCollidingBall.magnitude;
             var newKeneticEnergy = newKeneticEnergyBall + newKeneticEnergyCollidingBall;
             newKeneticEnergy = Mathf.Round(newKeneticEnergy * 100f) / 100f;
@@ -65,8 +73,8 @@ public class NormalBallCollision : MonoBehaviour
             Debug.Log("Kenetic Energy before collision: " + keneticEnergy + "   Kenetic Energy after collision: " + newKeneticEnergy);
             Debug.Log("before == after : " + (keneticEnergy == newKeneticEnergy));
 
-
-
+            rb.velocity = newVelocity;
+   
 
         }
 
